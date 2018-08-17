@@ -1,20 +1,105 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container-fluid">
+  <div class="row mx-5 my-2">
+    <div class="col-12">
+      <h3>
+        Quickly generate data structure
+        <small class="text-muted h6">v 1.0</small>
+      </h3>
+    </div>
+  </div>
+  <div class="row mx-5 my-2">
+    <div class="col-12">
+      <form>
+        <mat-form-field appearance="outline">
+          <mat-label>結構/表單名稱</mat-label>
+          <input matInput placeholder="Name" name="modelName" [(ngModel)]="modelName">
+        </mat-form-field>
+      </form>
+      <table class="table table-responsive table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">名稱</th>
+            <th scope="col">型態</th>
+            <th scope="col">長度</th>
+            <th scope="col">預設值</th>
+            <th scope="col">是否可為空值</th>
+            <th scope="col">是否為 PRIMARY</th>
+            <th scope="col">排序</th>
+            <th scope="col">刪除</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let variable of variables; let i = index;">
+            <th scope="row">{{ i+1 }}</th>
+            <td>
+              <form>
+                <mat-form-field appearance="outline">
+                  <mat-label>名稱</mat-label>
+                  <input matInput placeholder="Name" name="name" [(ngModel)]="variable.name">
+                </mat-form-field>
+              </form>
+            </td>
+            <td>
+              <form>
+                <mat-form-field appearance="outline">
+                  <mat-label>型態</mat-label>
+                  <mat-select placeholder="Type" name="type" [(ngModel)]="variable.type">
+                    <mat-option *ngFor="let type of typeList" [value]="type">
+                      {{ type }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </form>
+            </td>
+            <td>
+              <form>
+                <mat-form-field appearance="outline">
+                  <mat-label>長度</mat-label>
+                  <input matInput placeholder="Length" name="length" [(ngModel)]="variable.length">
+                </mat-form-field>
+              </form>
+            </td>
+            <td>
+              <form>
+                <mat-form-field appearance="outline">
+                  <mat-label>預設值</mat-label>
+                  <input matInput placeholder="Default" name="defaultValue" [(ngModel)]="variable.defaultValue">
+                </mat-form-field>
+              </form>
+            </td>
+            <td>
+              <form class="d-flex">
+                <mat-checkbox class="px-3 py-4" color="primary" name="isNull" [(ngModel)]="variable.isNull"></mat-checkbox>
+              </form>
+            </td>
+            <td>
+              <form class="d-flex">
+                <mat-checkbox class="px-3 py-4" color="primary" name="isPrimary" [(ngModel)]="variable.isPrimary"></mat-checkbox>
+              </form>
+            </td>
+            <td>
+              <button mat-raised-button class="mx-2 my-2" (click)="up(i)" disabled>上移</button>
+              <button mat-raised-button class="mx-2 my-2" (click)="down(i)" disabled>下移</button>
+            </td>
+            <td>
+              <button mat-raised-button class="mx-2 my-2" color="warn" (click)="delete(i)">刪除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button mat-raised-button class="mx-2 my-2" color="primary" (click)="add()">新增</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateAngular()">產生 Angular model</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateGolang()">產生 Go structure</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateSQL()">產生 SQL</button>
+    </div>
+  </div>
+  <div class="row mx-5 my-2">
+    <div class="col-12" *ngIf="result">
+      <button mat-raised-button class="mx-2 my-2" color="primary" (click)="copy()">複製</button>
+      {{ copiedMessage }}
+      <pre><code>{{ result }}</code></pre>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
