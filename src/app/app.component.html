@@ -7,12 +7,12 @@
       </h3>
     </div>
   </div>
-  <div class="row mx-5 my-2">
+  <div class="row mx-5 my-2 main-div">
     <div class="col-12">
       <form>
         <mat-form-field appearance="outline">
           <mat-label>Structure / Table name</mat-label>
-          <input matInput placeholder="Name" name="modelName" [(ngModel)]="modelName">
+          <input matInput placeholder="Structure / Table name" name="modelName" [(ngModel)]="modelName">
         </mat-form-field>
       </form>
       <table class="table table-responsive table-hover">
@@ -23,8 +23,8 @@
             <th scope="col">Type</th>
             <th scope="col">Length</th>
             <th scope="col">Default</th>
-            <th scope="col">Is NULL ?</th>
-            <th scope="col">Is PRIMARY ?</th>
+            <th scope="col">Is null ?</th>
+            <th scope="col">Is primary ?</th>
             <th scope="col">Sort</th>
             <th scope="col">Delete</th>
           </tr>
@@ -79,8 +79,8 @@
               </form>
             </td>
             <td>
-              <button mat-raised-button class="mx-2 my-2" (click)="up(i)" disabled>Up</button>
-              <button mat-raised-button class="mx-2 my-2" (click)="down(i)" disabled>Down</button>
+              <button mat-raised-button class="mx-2 my-2" (click)="up(i)">Up</button>
+              <button mat-raised-button class="mx-2 my-2" (click)="down(i)">Down</button>
             </td>
             <td>
               <button mat-raised-button class="mx-2 my-2" color="warn" (click)="delete(i)">Delete</button>
@@ -91,7 +91,9 @@
       <button mat-raised-button class="mx-2 my-2" color="primary" (click)="add()">Add</button>
       <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateAngular()">Generate Angular model</button>
       <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateGolang()">Generate Go structure</button>
-      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateSQL()">Generate SQL table</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateSQL()">Generate SQL</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateTable()">Generate Table</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateJSON()">Generate JSON example</button>
     </div>
   </div>
   <div class="row mx-5 my-2">
@@ -99,6 +101,13 @@
       <button mat-raised-button class="mx-2 my-2" color="primary" (click)="copy()">Copy</button>
       {{ copiedMessage }}
       <pre><code>{{ result }}</code></pre>
+    </div>
+  </div>
+  <div class="row mx-5 my-2">
+    <div class="col-12 d-flex">
+        <a class="ml-auto text-white" href="https://github.com/tpps88206/quickly-generate-data-structure">
+          <i class="fab fa-github"></i>
+        </a>
     </div>
   </div>
 </div>

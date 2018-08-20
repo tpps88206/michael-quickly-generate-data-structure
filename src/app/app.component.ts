@@ -163,16 +163,42 @@ export class AppComponent implements OnInit {
     this.result = this.result + 'COMMIT;\n';
   }
 
-  up(index: number): void {
+  generateTable(): void {
+    alert('Coming soon');
+  }
 
+  generateJSON(): void {
+    alert('Coming soon');
+  }
+
+  up(index: number): void {
+    if ((index + 1 ) < this.variables.length) {
+      alert('It is already at the top.');
+    } else {
+      const temp = this.variables[index];
+      this.variables[index] = this.variables[index - 1];
+      this.variables[index - 1] = temp;
+    }
   }
 
   down(index: number): void {
-
+    if ((index + 1 ) >= this.variables.length) {
+      alert('It is already at the bottom.');
+    } else {
+      const temp = this.variables[index];
+      this.variables[index] = this.variables[index + 1];
+      this.variables[index + 1] = temp;
+    }
   }
 
   delete(index: number): void {
-    this.variables.splice(index, 1);
+    const result = confirm('Are you sure you want to delete ' + this.variables[index].name + ' ?');
+    if (result) {
+      this.variables.splice(index, 1);
+      if (this.variables.length === 0) {
+        this.add();
+      }
+    }
   }
 
   copy(): void {

@@ -1,3 +1,7 @@
 pre {
   background-color: #f7f7f7;
 }
+
+.main-div {
+    min-height: calc(100vh - 121px);
+}
