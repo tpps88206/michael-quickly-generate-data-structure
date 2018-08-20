@@ -9,6 +9,6 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to angular-quickly-generate-model!');
+    expect(page.getParagraphText()).toEqual('Welcome to quickly-generate-data-structure!');
   });
 });

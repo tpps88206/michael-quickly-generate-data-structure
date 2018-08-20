@@ -38,11 +38,11 @@ export class AppComponent implements OnInit {
   generateAngular(): void {
     this.copiedMessage = '';
 
-    this.result = 'export class ' + this.titleCase(this.modelName) + 'Model {\n';
+    this.result = 'export class ' + this.underLineAndTitleCase(this.modelName) + 'Model {\n';
 
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '  ';
-      this.result = this.result + this.variables[i].name + ': ';
+      this.result = this.result + this.underLine(this.variables[i].name) + ': ';
       if (this.variables[i].type === '數字') {
         this.result = this.result + 'number;';
       } else if (this.variables[i].type === '字串') {
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
 
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '    ';
-      this.result = this.result + this.variables[i].name + ': ';
+      this.result = this.result + this.underLine(this.variables[i].name) + ': ';
       if (this.variables[i].type === '數字') {
         this.result = this.result + 'number';
       } else if (this.variables[i].type === '字串') {
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
 
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '    ';
-      this.result = this.result + 'this.' + this.variables[i].name + ' = ' + this.variables[i].name;
+      this.result = this.result + 'this.' + this.underLine(this.variables[i].name) + ' = ' + this.underLine(this.variables[i].name);
       this.result = this.result + '\n';
     }
 
@@ -85,11 +85,11 @@ export class AppComponent implements OnInit {
   generateGolang(): void {
     this.copiedMessage = '';
 
-    this.result = 'type ' + this.titleCase(this.modelName) + ' struct {\n';
+    this.result = 'type ' + this.underLineAndTitleCase(this.modelName) + ' struct {\n';
 
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '    ';
-      this.result = this.result + this.titleCase(this.variables[i].name);
+      this.result = this.result + this.underLineAndTitleCase(this.variables[i].name);
       if (this.variables[i].type === '數字') {
         this.result = this.result + ' int ';
       } else if (this.variables[i].type === '字串') {
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
       }
 
       this.result = this.result + '`json:"';
-      this.result = this.result + this.variables[i].name;
+      this.result = this.result + this.underLine(this.variables[i].name);
       this.result = this.result + '"`\n';
     }
 
@@ -209,5 +209,15 @@ export class AppComponent implements OnInit {
   titleCase(input: string): string {
     return input.length === 0 ? '' :
       input.replace(/\w\S*/g, (txt => txt[0].toUpperCase() + txt.substr(1).toLowerCase() ));
+  }
+
+  underLine(input: string): string {
+    return input.length === 0 ? '' :
+      input.replace(/_./g, (txt => txt.slice(-1).toUpperCase() ));
+  }
+
+  underLineAndTitleCase(input: string): string {
+    return input.length === 0 ? '' :
+      input.replace(/(^|_)./g, (txt => txt.slice(-1).toUpperCase() ));
   }
 }
