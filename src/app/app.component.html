@@ -3,7 +3,7 @@
     <div class="col-12">
       <h3>
         Quickly Generate Data Structure
-        <small class="text-muted h6">v 1.0</small>
+        <small class="text-muted h6">v 1.1</small>
       </h3>
     </div>
   </div>
@@ -11,7 +11,7 @@
     <div class="col-12">
       <form>
         <mat-form-field appearance="outline">
-          <mat-label>結構/表單名稱</mat-label>
+          <mat-label>Structure / Table name</mat-label>
           <input matInput placeholder="Name" name="modelName" [(ngModel)]="modelName">
         </mat-form-field>
       </form>
@@ -19,14 +19,14 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">名稱</th>
-            <th scope="col">型態</th>
-            <th scope="col">長度</th>
-            <th scope="col">預設值</th>
-            <th scope="col">是否可為空值</th>
-            <th scope="col">是否為 PRIMARY</th>
-            <th scope="col">排序</th>
-            <th scope="col">刪除</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Length</th>
+            <th scope="col">Default</th>
+            <th scope="col">Is NULL ?</th>
+            <th scope="col">Is PRIMARY ?</th>
+            <th scope="col">Sort</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +35,7 @@
             <td>
               <form>
                 <mat-form-field appearance="outline">
-                  <mat-label>名稱</mat-label>
+                  <mat-label>Name</mat-label>
                   <input matInput placeholder="Name" name="name" [(ngModel)]="variable.name">
                 </mat-form-field>
               </form>
@@ -43,7 +43,7 @@
             <td>
               <form>
                 <mat-form-field appearance="outline">
-                  <mat-label>型態</mat-label>
+                  <mat-label>Type</mat-label>
                   <mat-select placeholder="Type" name="type" [(ngModel)]="variable.type">
                     <mat-option *ngFor="let type of typeList" [value]="type">
                       {{ type }}
@@ -55,7 +55,7 @@
             <td>
               <form>
                 <mat-form-field appearance="outline">
-                  <mat-label>長度</mat-label>
+                  <mat-label>Length</mat-label>
                   <input matInput placeholder="Length" name="length" [(ngModel)]="variable.length">
                 </mat-form-field>
               </form>
@@ -63,7 +63,7 @@
             <td>
               <form>
                 <mat-form-field appearance="outline">
-                  <mat-label>預設值</mat-label>
+                  <mat-label>Default</mat-label>
                   <input matInput placeholder="Default" name="defaultValue" [(ngModel)]="variable.defaultValue">
                 </mat-form-field>
               </form>
@@ -79,24 +79,24 @@
               </form>
             </td>
             <td>
-              <button mat-raised-button class="mx-2 my-2" (click)="up(i)" disabled>上移</button>
-              <button mat-raised-button class="mx-2 my-2" (click)="down(i)" disabled>下移</button>
+              <button mat-raised-button class="mx-2 my-2" (click)="up(i)" disabled>Up</button>
+              <button mat-raised-button class="mx-2 my-2" (click)="down(i)" disabled>Down</button>
             </td>
             <td>
-              <button mat-raised-button class="mx-2 my-2" color="warn" (click)="delete(i)">刪除</button>
+              <button mat-raised-button class="mx-2 my-2" color="warn" (click)="delete(i)">Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
-      <button mat-raised-button class="mx-2 my-2" color="primary" (click)="add()">新增</button>
-      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateAngular()">產生 Angular model</button>
-      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateGolang()">產生 Go structure</button>
-      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateSQL()">產生 SQL</button>
+      <button mat-raised-button class="mx-2 my-2" color="primary" (click)="add()">Add</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateAngular()">Generate Angular model</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateGolang()">Generate Go structure</button>
+      <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateSQL()">Generate SQL table</button>
     </div>
   </div>
   <div class="row mx-5 my-2">
     <div class="col-12" *ngIf="result">
-      <button mat-raised-button class="mx-2 my-2" color="primary" (click)="copy()">複製</button>
+      <button mat-raised-button class="mx-2 my-2" color="primary" (click)="copy()">Copy</button>
       {{ copiedMessage }}
       <pre><code>{{ result }}</code></pre>
     </div>

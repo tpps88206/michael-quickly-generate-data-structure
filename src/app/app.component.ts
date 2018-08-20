@@ -1,5 +1,5 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {VariableModel} from './variable.model';
+import { Component, OnInit, Inject } from '@angular/core';
+import { VariableModel } from './variable.model';
 import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   modelName = '';
   variables: VariableModel[] = [];
   result = '';
-  typeList = ['數字', '字串', '布林值'];
+  typeList = ['Integer', 'String', 'Boolean'];
   copiedMessage = '';
 
   constructor(@Inject(DOCUMENT) private dom: Document) {
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     this.variables.push(new VariableModel(
       this.variables.length,
       '',
-      '數字',
+      'Integer',
       0,
       '',
       false,
@@ -38,16 +38,16 @@ export class AppComponent implements OnInit {
   generateAngular(): void {
     this.copiedMessage = '';
 
-    this.result = 'export class ' + this.underLineAndTitleCase(this.modelName) + 'Model {\n';
+    this.result = 'export class ' + this.underLine(this.titleCase(this.modelName)) + 'Model {\n';
 
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '  ';
       this.result = this.result + this.underLine(this.variables[i].name) + ': ';
-      if (this.variables[i].type === '數字') {
+      if (this.variables[i].type === 'Integer') {
         this.result = this.result + 'number;';
-      } else if (this.variables[i].type === '字串') {
+      } else if (this.variables[i].type === 'String') {
         this.result = this.result + 'string;';
-      } else  if (this.variables[i].type === '布林值') {
+      } else  if (this.variables[i].type === 'Boolean') {
         this.result = this.result + 'boolean;';
       }
       this.result = this.result + '\n';
@@ -58,11 +58,11 @@ export class AppComponent implements OnInit {
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '    ';
       this.result = this.result + this.underLine(this.variables[i].name) + ': ';
-      if (this.variables[i].type === '數字') {
+      if (this.variables[i].type === 'Integer') {
         this.result = this.result + 'number';
-      } else if (this.variables[i].type === '字串') {
+      } else if (this.variables[i].type === 'String') {
         this.result = this.result + 'string';
-      } else  if (this.variables[i].type === '布林值') {
+      } else  if (this.variables[i].type === 'Boolean') {
         this.result = this.result + 'boolean';
       }
       if (i !== this.variables.length - 1) {
@@ -85,17 +85,17 @@ export class AppComponent implements OnInit {
   generateGolang(): void {
     this.copiedMessage = '';
 
-    this.result = 'type ' + this.underLineAndTitleCase(this.modelName) + ' struct {\n';
+    this.result = 'type ' + this.underLine(this.titleCase(this.modelName)) + ' struct {\n';
 
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '    ';
-      this.result = this.result + this.underLineAndTitleCase(this.variables[i].name);
-      if (this.variables[i].type === '數字') {
-        this.result = this.result + ' int ';
-      } else if (this.variables[i].type === '字串') {
-        this.result = this.result + ' string ';
-      } else  if (this.variables[i].type === '布林值') {
-        this.result = this.result + ' bool ';
+      this.result = this.result + this.underLine(this.titleCase(this.variables[i].name)) + ' ';
+      if (this.variables[i].type === 'Integer') {
+        this.result = this.result + 'int ';
+      } else if (this.variables[i].type === 'String') {
+        this.result = this.result + 'string ';
+      } else  if (this.variables[i].type === 'Boolean') {
+        this.result = this.result + 'bool ';
       }
 
       this.result = this.result + '`json:"';
@@ -118,14 +118,14 @@ export class AppComponent implements OnInit {
     for (let i = 0; i < this.variables.length; i++) {
       this.result = this.result + '  ';
       this.result = this.result + '`' + this.variables[i].name + '` ';
-      if (this.variables[i].type === '數字') {
+      if (this.variables[i].type === 'Integer') {
         this.result = this.result + 'int';
-      } else if (this.variables[i].type === '字串') {
+      } else if (this.variables[i].type === 'String') {
         this.result = this.result + 'varchar';
-      } else  if (this.variables[i].type === '布林值') {
+      } else  if (this.variables[i].type === 'Boolean') {
         this.result = this.result + 'tinyint';
       }
-      if (this.variables[i].type === '布林值') {
+      if (this.variables[i].type === 'Boolean') {
         this.result = this.result + '(1) ';
       } else {
         this.result = this.result + '(' + this.variables[i].length + ') ';
@@ -183,7 +183,7 @@ export class AppComponent implements OnInit {
   execCopy() {
     try {
       const copyStatus = this.dom.execCommand('copy');
-      copyStatus ? this.copiedMessage = '已複製' : this.copiedMessage = '複製出了點問題QAQ...請手動複製';
+      copyStatus ? this.copiedMessage = 'Copied' : this.copiedMessage = 'Something wrong...';
     } catch (error) {
       console.log(`${error}`);
     }
@@ -214,10 +214,5 @@ export class AppComponent implements OnInit {
   underLine(input: string): string {
     return input.length === 0 ? '' :
       input.replace(/_./g, (txt => txt.slice(-1).toUpperCase() ));
-  }
-
-  underLineAndTitleCase(input: string): string {
-    return input.length === 0 ? '' :
-      input.replace(/(^|_)./g, (txt => txt.slice(-1).toUpperCase() ));
   }
 }
