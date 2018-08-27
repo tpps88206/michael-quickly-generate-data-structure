@@ -3,11 +3,11 @@
     <div class="col-12">
       <h3>
         Quickly Generate Data Structure
-        <small class="text-muted h6">v 1.1</small>
+        <small class="text-muted h6">v 1.2</small>
       </h3>
     </div>
   </div>
-  <div class="row mx-5 my-2 main-div">
+  <div class="row mx-2 my-2 main-div">
     <div class="col-12">
       <form>
         <mat-form-field appearance="outline">
@@ -95,12 +95,34 @@
       <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateTable()">Generate Table</button>
       <button mat-raised-button class="mx-2 my-2" color="accent" (click)="generateJSON()">Generate JSON example</button>
     </div>
-  </div>
-  <div class="row mx-5 my-2">
     <div class="col-12" *ngIf="result">
       <button mat-raised-button class="mx-2 my-2" color="primary" (click)="copy()">Copy</button>
       {{ copiedMessage }}
-      <pre><code>{{ result }}</code></pre>
+      <ng-container *ngIf="resultType === 'code'">
+        <pre><code>{{ result }}</code></pre>
+      </ng-container>
+      <ng-container *ngIf="resultType === 'table'">
+        <table class="result-table">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Length</th>
+            <th scope="col">Default</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let variable of variables; let i = index;">
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ variable.name }}</td>
+            <td>{{ variable.type }}</td>
+            <td>{{ variable.length }}</td>
+            <td>{{ variable.defaultValue }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
     </div>
   </div>
   <div class="row mx-5 my-2">

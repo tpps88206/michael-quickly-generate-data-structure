@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   result = '';
   typeList = ['Integer', 'String', 'Boolean'];
   copiedMessage = '';
+  resultType = 'code';
 
   constructor(@Inject(DOCUMENT) private dom: Document) {
 
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   generateAngular(): void {
+    this.resultType = 'code';
     this.copiedMessage = '';
 
     this.result = 'export class ' + this.underLine(this.titleCase(this.modelName)) + 'Model {\n';
@@ -83,6 +85,7 @@ export class AppComponent implements OnInit {
   }
 
   generateGolang(): void {
+    this.resultType = 'code';
     this.copiedMessage = '';
 
     this.result = 'type ' + this.underLine(this.titleCase(this.modelName)) + ' struct {\n';
@@ -107,6 +110,7 @@ export class AppComponent implements OnInit {
   }
 
   generateSQL(): void {
+    this.resultType = 'code';
     this.copiedMessage = '';
 
     this.result = 'SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";\n';
@@ -164,10 +168,14 @@ export class AppComponent implements OnInit {
   }
 
   generateTable(): void {
-    alert('Coming soon');
+    this.resultType = 'table';
+    this.copiedMessage = '';
+    this.result = 'table';
   }
 
   generateJSON(): void {
+    this.resultType = 'code';
+    this.copiedMessage = '';
     alert('Coming soon');
   }
 
@@ -202,7 +210,11 @@ export class AppComponent implements OnInit {
   }
 
   copy(): void {
-    this.selectText('code');
+    if (this.resultType === 'code') {
+      this.selectText('code');
+    } else if (this.resultType === 'table') {
+      this.selectText('.result-table');
+    }
     this.execCopy();
   }
 
