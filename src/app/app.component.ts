@@ -1,6 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { VariableModel } from './variable.model';
 import { DOCUMENT } from '@angular/platform-browser';
+
+import { VariableModel } from './model/variable.model';
+import { GenerateSqlService } from './service/generate-sql.service';
+import { GenerateJsonService } from './service/generate-json.service';
+import { GenerateGolangService } from './service/generate-golang.service';
+import { GenerateAngularService } from './service/generate-angular.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +20,13 @@ export class AppComponent implements OnInit {
   copiedMessage = '';
   resultType = 'code';
 
-  constructor(@Inject(DOCUMENT) private dom: Document) {
+  constructor(
+    @Inject(DOCUMENT) private dom: Document,
+    private generateSqlService: GenerateSqlService,
+    private generateJsonService: GenerateJsonService,
+    private generateGolangService: GenerateGolangService,
+    private generateAngularService: GenerateAngularService,
+  ) {
 
   }
 
@@ -40,131 +51,21 @@ export class AppComponent implements OnInit {
     this.resultType = 'code';
     this.copiedMessage = '';
 
-    this.result = 'export class ' + this.underLine(this.titleCase(this.modelName)) + 'Model {\n';
-
-    for (let i = 0; i < this.variables.length; i++) {
-      this.result = this.result + '  ';
-      this.result = this.result + this.underLine(this.variables[i].name) + ': ';
-      if (this.variables[i].type === 'Integer') {
-        this.result = this.result + 'number;';
-      } else if (this.variables[i].type === 'String') {
-        this.result = this.result + 'string;';
-      } else  if (this.variables[i].type === 'Boolean') {
-        this.result = this.result + 'boolean;';
-      }
-      this.result = this.result + '\n';
-    }
-
-    this.result = this.result + '  constructor(\n';
-
-    for (let i = 0; i < this.variables.length; i++) {
-      this.result = this.result + '    ';
-      this.result = this.result + this.underLine(this.variables[i].name) + ': ';
-      if (this.variables[i].type === 'Integer') {
-        this.result = this.result + 'number';
-      } else if (this.variables[i].type === 'String') {
-        this.result = this.result + 'string';
-      } else  if (this.variables[i].type === 'Boolean') {
-        this.result = this.result + 'boolean';
-      }
-      if (i !== this.variables.length - 1) {
-        this.result = this.result + ',';
-      }
-      this.result = this.result + '\n';
-    }
-
-    this.result = this.result + '  ) {\n';
-
-    for (let i = 0; i < this.variables.length; i++) {
-      this.result = this.result + '    ';
-      this.result = this.result + 'this.' + this.underLine(this.variables[i].name) + ' = ' + this.underLine(this.variables[i].name);
-      this.result = this.result + '\n';
-    }
-
-    this.result = this.result + '  }\n}';
+    this.result = this.generateAngularService.generate(this.variables, this.modelName);
   }
 
   generateGolang(): void {
     this.resultType = 'code';
     this.copiedMessage = '';
 
-    this.result = 'type ' + this.underLine(this.titleCase(this.modelName)) + ' struct {\n';
-
-    for (let i = 0; i < this.variables.length; i++) {
-      this.result = this.result + '    ';
-      this.result = this.result + this.underLine(this.titleCase(this.variables[i].name)) + ' ';
-      if (this.variables[i].type === 'Integer') {
-        this.result = this.result + 'int ';
-      } else if (this.variables[i].type === 'String') {
-        this.result = this.result + 'string ';
-      } else  if (this.variables[i].type === 'Boolean') {
-        this.result = this.result + 'bool ';
-      }
-
-      this.result = this.result + '`json:"';
-      this.result = this.result + this.underLine(this.variables[i].name);
-      this.result = this.result + '"`\n';
-    }
-
-    this.result = this.result + '}';
+    this.result = this.generateGolangService.generate(this.variables, this.modelName);
   }
 
   generateSQL(): void {
     this.resultType = 'code';
     this.copiedMessage = '';
 
-    this.result = 'SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";\n';
-    this.result = this.result + 'SET AUTOCOMMIT = 0;\n';
-    this.result = this.result + 'START TRANSACTION;\n';
-    this.result = this.result + 'SET time_zone = "+00:00";\n';
-
-    this.result = this.result + 'CREATE TABLE `' + this.modelName + '` (\n';
-    for (let i = 0; i < this.variables.length; i++) {
-      this.result = this.result + '  ';
-      this.result = this.result + '`' + this.variables[i].name + '` ';
-      if (this.variables[i].type === 'Integer') {
-        this.result = this.result + 'int';
-      } else if (this.variables[i].type === 'String') {
-        this.result = this.result + 'varchar';
-      } else  if (this.variables[i].type === 'Boolean') {
-        this.result = this.result + 'tinyint';
-      }
-      if (this.variables[i].type === 'Boolean') {
-        this.result = this.result + '(1) ';
-      } else {
-        this.result = this.result + '(' + this.variables[i].length + ') ';
-      }
-      if (this.variables[i].isNull) {
-        if (this.variables[i].defaultValue === '') {
-          this.result = this.result + 'DEFAULT NULL';
-        } else {
-          this.result = this.result + 'DEFAULT "' + this.variables[i].defaultValue + '"';
-        }
-      } else {
-        if (this.variables[i].defaultValue === '') {
-          this.result = this.result + 'NOT NULL';
-        } else {
-          this.result = this.result + 'NOT NULL DEFAULT "' + this.variables[i].defaultValue + '"';
-        }
-      }
-      if (i !== this.variables.length - 1) {
-        this.result = this.result + ',';
-      }
-      this.result = this.result + '\n';
-    }
-    this.result = this.result + ') ENGINE=InnoDB DEFAULT CHARSET=utf8;\n';
-
-    for (let i = 0; i < this.variables.length; i++) {
-      if (this.variables[i].isPrimary) {
-        this.result = this.result + 'ALTER TABLE `' + this.modelName + '`\n';
-        this.result = this.result + '  ADD PRIMARY KEY (`' + this.variables[i].name + '`);\n';
-        this.result = this.result + 'ALTER TABLE `' + this.modelName + '`\n';
-        this.result = this.result + '  MODIFY `' + this.variables[i].name + '` int(11) NOT NULL AUTO_INCREMENT;\n';
-        break;
-      }
-    }
-
-    this.result = this.result + 'COMMIT;\n';
+    this.result = this.generateSqlService.generate(this.variables, this.modelName);
   }
 
   generateTable(): void {
@@ -177,23 +78,7 @@ export class AppComponent implements OnInit {
     this.resultType = 'code';
     this.copiedMessage = '';
 
-    this.result = '{\n';
-    for (let i = 0; i < this.variables.length; i++) {
-      this.result = this.result + '  ';
-      this.result = this.result + '"' + this.variables[i].name + '" : ';
-      if (this.variables[i].type === 'Integer') {
-        this.result = this.result + '1';
-      } else if (this.variables[i].type === 'String') {
-        this.result = this.result + '"text"';
-      } else  if (this.variables[i].type === 'Boolean') {
-        this.result = this.result + 'true';
-      }
-      if (i !== this.variables.length - 1) {
-        this.result = this.result + ',';
-      }
-      this.result = this.result + '\n';
-    }
-    this.result = this.result + '}';
+    this.result = this.generateJsonService.generate(this.variables);
   }
 
   up(index: number): void {
@@ -259,15 +144,5 @@ export class AppComponent implements OnInit {
       selection.removeAllRanges();
       selection.addRange(range);
     }
-  }
-
-  titleCase(input: string): string {
-    return input.length === 0 ? '' :
-      input.replace(/\w\S*/g, (txt => txt[0].toUpperCase() + txt.substr(1).toLowerCase() ));
-  }
-
-  underLine(input: string): string {
-    return input.length === 0 ? '' :
-      input.replace(/_./g, (txt => txt.slice(-1).toUpperCase() ));
   }
 }
