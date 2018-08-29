@@ -176,7 +176,24 @@ export class AppComponent implements OnInit {
   generateJSON(): void {
     this.resultType = 'code';
     this.copiedMessage = '';
-    alert('Coming soon');
+
+    this.result = '{\n';
+    for (let i = 0; i < this.variables.length; i++) {
+      this.result = this.result + '  ';
+      this.result = this.result + '"' + this.variables[i].name + '" : ';
+      if (this.variables[i].type === 'Integer') {
+        this.result = this.result + '1';
+      } else if (this.variables[i].type === 'String') {
+        this.result = this.result + '"text"';
+      } else  if (this.variables[i].type === 'Boolean') {
+        this.result = this.result + 'true';
+      }
+      if (i !== this.variables.length - 1) {
+        this.result = this.result + ',';
+      }
+      this.result = this.result + '\n';
+    }
+    this.result = this.result + '}';
   }
 
   up(index: number): void {
