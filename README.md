@@ -1,4 +1,10 @@
-# QuicklyGenerateDataStructure
+# Quickly Generate Data Structure
+
+Quickly generate data structure with multiple language. 
+
+http://qgds.micheh.com/
+
+## Development tool
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
