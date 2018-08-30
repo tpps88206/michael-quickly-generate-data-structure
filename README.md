@@ -4,6 +4,8 @@ Quickly generate data structure with multiple language.
 
 http://qgds.micheh.com/
 
+Now support language : Angular, Golang, JSON, SQL, Normal table
+
 ## Development tool
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
