@@ -5,3 +5,32 @@ pre {
 .main-div {
     min-height: calc(100vh - 121px);
 }
+
+.badge {
+  font-size: 1rem;
+}
+
+.badge-angular {
+  background-color: #db3734;
+  color: white;
+}
+
+.badge-go {
+  background-color: #36db7f;
+  color: black;
+}
+
+.badge-sql {
+  background-color: #258ddb;
+  color: white;
+}
+
+.badge-json {
+  background-color: #dbdacb;
+  color: black;
+}
+
+.badge-table {
+  background-color: #1c4a48;
+  color: white;
+}

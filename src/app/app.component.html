@@ -1,10 +1,25 @@
 <div class="container-fluid">
   <div class="row mx-5 my-2">
     <div class="col-12">
-      <h3>
-        Quickly Generate Data Structure
-        <small class="text-muted h6">v 2.1</small>
-      </h3>
+      <div class="jumbotron">
+        <h3>Quickly Generate Data Structure</h3>
+        <p class="lead my-2">Quickly generate data structure with multiple language.</p>
+        <hr class="my-4">
+        <p>Now support language :</p>
+        <span class="badge badge-pill badge-angular">Angular</span>
+        <p class="text-muted h6 my-2 mx-4">Generate Angular 2, Angular 4, Angular 5, Angular 6, Angular 7 data structure.</p>
+        <span class="badge badge-pill badge-go">Golang</span>
+        <p class="text-muted h6 my-2 mx-4">Generate Go programming language data structure.</p>
+        <span class="badge badge-pill badge-json">JSON</span>
+        <p class="text-muted h6 my-2 mx-4">Generate JSON data structure.</p>
+        <span class="badge badge-pill badge-sql">SQL</span>
+        <p class="text-muted h6 my-2 mx-4">Generate SQL data structure.</p>
+        <span class="badge badge-pill badge-table">Normal table</span>
+        <p class="text-muted h6 my-2 mx-4">Generate the normal table data structure.</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" role="button" onclick="$('.model-name-input')[0].focus()">Start now</a>
+        <small class="text-muted h6 mx-2">version 2.2</small>
+      </div>
     </div>
   </div>
   <div class="row mx-5 my-2 main-div">
@@ -12,7 +27,7 @@
       <form>
         <mat-form-field appearance="outline">
           <mat-label>Structure / Table name</mat-label>
-          <input matInput placeholder="Structure / Table name" name="modelName" [(ngModel)]="modelName">
+          <input class="model-name-input" matInput placeholder="Structure / Table name" name="modelName" [(ngModel)]="modelName">
         </mat-form-field>
       </form>
       <table class="table table-responsive table-hover">

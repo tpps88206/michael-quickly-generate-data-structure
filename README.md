@@ -19,6 +19,7 @@ This project was developed with :
 * [Angular](https://github.com/angular/angular) version 7.0.2
 * [Angular Material](https://github.com/angular/material2) 
 * [Node](https://github.com/nodejs/node) version 11.0.0
+* [Bootstrap](https://github.com/twbs/bootstrap) version 4.1.3
 
 ## Development server
 
