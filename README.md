@@ -2,8 +2,6 @@
 
 Quickly generate data structure with multiple language. 
 
-https://qgds.micheh.com/
-
 Now support language : 
 
 * Angular
